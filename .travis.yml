@@ -1,0 +1,20 @@
+osx_image: xcode7.1
+language: objective-c
+before_install:
+  - wget https://github.com/Carthage/Carthage/releases/download/0.10/Carthage.pkg
+  - sudo installer -pkg Carthage.pkg -target /
+  - "./scripts/add-key.sh"
+script:
+  - agvtool new-version -all $TRAVIS_BUILD_NUMBER
+  - carthage build --no-skip-current
+before_deploy:
+  - carthage archive cminpack
+deploy:
+  provider: releases
+  api_key:
+    secure: cuHWY2befDjh17hKA0lhzlhjgHDNO3D3usC15C7KGuHhVeypOHC+A6RWdwLkgNWm34bq+uVelD3rpjoADPnPZzqKsBswJKF01CaRk9ZGmUjWr/nvDBCr1SuD38X+nFEYW885IEu7d+QIcER7m9J2v1yKT4WIlHmEB08BXx92KN6Tff8pvY7L0WDQDmS8pg3rzNp0L4HX35MvcsxyrcR+z8699kCo3W/UfKpMCo/Bf1rOOka8/QcRNH/pqzagzUIgm9YwIQUC8oQrd2OEhQDdVnh3LLThvQMle4wQr2+qYk3j4/ZLS0QshHy3pQfW4OPHEo5JduPoepsO8tPdQ/YMUBr39n8hApIAiPi/yGZrp4OGaz33uGhkFfuADzE8ihgKbDy5HrIAzqbN5ZaumksKw7jsskoUNKQ+bEPfXWGzzwW4IcTXdxKau/djcGWzBOB7U+mN7o5q06tYPLKO3a/sstL6N8vVAv8H7GgEuHrntH7O8rZVSjt3QukILzWLwJVacBN1OvfqpfRgM8GpPqcwp3uw3cwIPzylx2RUipW4hP9JgeSjUH8etSzlwASlMbtbDzysB1cHTGO/i5HLDEcRWlOlcJYI7Gkaor5yuR5OLQlQL0HiyoPxR8dW5ZcHuGq47D37nCNqKU0fHlTn4rKhIm7LUO26Ax5pAYPbpu0PN1U=
+  file: cminpack.framework.zip
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
