@@ -1,0 +1,7 @@
+.DS_STORE
+DerivedData/
+xcuserdata/
+
+Carthage/
+
+cminpack.framework.zip
